@@ -1,23 +1,73 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Build outputs
+dist/
+build/
 
-# testing
-/coverage
+# JetBrains IDE files
+.idea/
+*.iml
 
-# production
-/build
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
 
-# misc
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Miscellaneous
 .DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Environment variables
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Coverage directories
+coverage/
+
+# Cache directories
+.cache/
+.vscode/
+.eslintcache
+.next/
+
+# Testing
+jest/
+__tests__/
+*.snap
+
+# Optional npm cache
+.npm/
+
+# Storybook files
+storybook-static/
+
+# IDE-specific settings
+.idea/
+*.iml
+
+# Temp files created by JetBrains
+*.ijwb/.*
+*.ijwb/
+
+# Temp files created by Windows
+*.lnk
+
+# Lock files
+*.lock

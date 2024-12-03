@@ -1,0 +1,55 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 400px;
+    height: 400px;
+    border: 2px solid black;
+    max-width: 90%;
+    aspect-ratio: 1;
+    margin: auto;
+}
+
+.square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.square.dark:hover {
+    background-color: #a66a4f; /* Slightly lighter dark square */
+    cursor: pointer;
+}
+
+.light {
+    background-color: #f0d9b5; /* Light square */
+}
+
+.dark {
+    background-color: #b58863; /* Dark square */
+}
+
+.selected {
+    outline: 3px solid gold; /* Highlight the selected square */
+}
+
+.piece {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+}
+
+.red {
+    background-color: red;
+}
+
+.black {
+    background-color: black;
+}
+
+.king {
+    border: 2px solid gold;
+}

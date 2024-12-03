@@ -1,0 +1,30 @@
+.piece {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.piece.red {
+    background-color: red;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.piece.black {
+    background-color: black;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.crown {
+    color: gold;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

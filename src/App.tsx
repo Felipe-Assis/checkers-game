@@ -10,47 +10,61 @@ const App: React.FC = () => {
   const [playerColor] = useState<"red" | "black">("red");
   const [aiColor] = useState<"red" | "black">("black");
   const [playerTurn, setPlayerTurn] = useState<"red" | "black">("red");
+  const [currentTurn, setCurrentTurn] = useState<"red" | "black">("red");
 
-  const handleMove = (move: Move) => {
+
+
+  const handlePlayerMove = (move: Move) => {
     if (validateMove(board, move, playerColor)) {
       const updatedBoard = makeMove(board, move);
       setBoard(updatedBoard);
-
-      // AI Turn
-      const aiMove = getAIMove(updatedBoard, aiColor);
-      setBoard(makeMove(updatedBoard, aiMove));
+      setSelectedPiece(null);
+      setCurrentTurn(aiColor); // Pass turn to AI
+      triggerAIMove(updatedBoard); // Let the AI play
+    } else {
+      console.log("Invalid move");
+      setSelectedPiece(null); // Deselect invalid move
     }
   };
 
+  const triggerAIMove = (currentBoard: BoardType) => {
+    setTimeout(() => {
+      const aiMove = getAIMove(currentBoard, aiColor);
+      console.log(`AI Move Generated:`, aiMove);
+      if (aiMove) {
+        const updatedBoard = makeMove(currentBoard, aiMove);
+        console.log("Board after AI Move:", updatedBoard);
+        setBoard(updatedBoard); // Apply state update
+        console.log("State Updated: AI move applied.");
+        setCurrentTurn(playerColor); // Switch back to player's turn
+      } else {
+        console.log("AI has no valid moves. Skipping turn.");
+        setCurrentTurn(playerColor); // Skip turn
+      }
+    }, 500);
+  };
+
+
   const handleSquareClick = (row: number, col: number) => {
+    if (currentTurn !== playerColor) return; // Ignore clicks if it's not the player's turn
+
     const square = board[row][col];
 
     if (selectedPiece) {
       // Attempt to create a move
       const move: Move = { from: selectedPiece, to: { row, col } };
 
-      if (validateMove(board, move, playerTurn)) {
-        // Move is valid
+      if (validateMove(board, move, playerColor)) {
         const updatedBoard = makeMove(board, move);
-        setBoard(updatedBoard); // Update board state
-        setSelectedPiece(null); // Deselect piece
-        setPlayerTurn(playerTurn === "red" ? "black" : "red"); // Switch turn
-
-        // Trigger AI move after player's turn (if AI's turn)
-        if (playerTurn === "red") {
-          setTimeout(() => {
-            const aiMove = getAIMove(updatedBoard, "black");
-            if (aiMove) {
-              setBoard(makeMove(updatedBoard, aiMove)); // Make AI move
-              setPlayerTurn("red");
-            }
-          }, 500); // AI delay for better UX
-        }
+        setBoard(updatedBoard);
+        setSelectedPiece(null);
+        setCurrentTurn(aiColor); // Switch turn to AI
+        triggerAIMove(updatedBoard); // Trigger AI move
       } else {
-        console.log("Invalid move"); // Log invalid move attempts
-        setSelectedPiece(null); // Deselect the piece on invalid move
+        console.log("Invalid move");
+        setSelectedPiece(null); // Reset selection on invalid move
       }
-    } else if (square.piece && square.piece.color === playerTurn) {
+    } else if (square.piece && square.piece.color === playerColor) {
       // Select a piece if no piece is selected
       setSelectedPiece({ row, col });
     }
@@ -60,7 +74,8 @@ const App: React.FC = () => {
   return (
       <div>
         <h1>Checkers Game</h1>
-        <Board board={board} onMove={handleMove} onSquareClick={handleSquareClick} selectedPiece={selectedPiece} />
+        <p>Current Turn: {currentTurn === playerColor ? "Player" : "AI"}</p>
+        <Board board={board} onMove={() => {}} onSquareClick={handleSquareClick} selectedPiece={selectedPiece} />
       </div>
   );
 };
